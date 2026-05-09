@@ -1,17 +1,15 @@
-/* Variables de diseño */
 :root {
     --verde-sena: #39A900;
     --azul-oscuro: #2F2F2F;
     --gris-fondo: #F0F2F5;
     --blanco: #FFFFFF;
-    --transicion: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 body {
@@ -21,142 +19,126 @@ body {
     align-items: center;
     padding: 40px 20px;
     color: var(--azul-oscuro);
-    transition: background-color 0.3s ease;
+    transition: background-color 0.4s ease;
+    min-height: 100vh;
 }
 
-/* Título Principal */
 h2 {
     color: var(--verde-sena);
     font-size: 2.5rem;
-    margin-bottom: 40px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    margin-bottom: 30px;
     border-bottom: 4px solid var(--verde-sena);
-    padding-bottom: 10px;
 }
 
-/* Botón de Modo Oscuro */
 #darkModeToggle {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     padding: 10px 20px;
     border: none;
-    border-radius: 20px;
+    border-radius: 25px;
     background-color: var(--verde-sena);
     color: white;
-    cursor: pointer;
     font-weight: bold;
+    cursor: pointer;
     transition: 0.3s;
 }
 
-#darkModeToggle:hover {
-    background-color: #2d8500;
-    transform: scale(1.05);
-}
+#darkModeToggle:hover { transform: scale(1.05); }
 
-/* Contenedor de las Tarjetas */
+/* CONTENEDOR DE TARJETAS */
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 25px;
-    max-width: 1200px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1100px;
     width: 100%;
 }
 
-/* Estilo de las Tarjetas */
+/* EFECTO FLIP (GIRO) */
 .card {
-    background: var(--blanco);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-top: 5px solid var(--verde-sena);
+    background-color: transparent;
+    height: 380px;
+    perspective: 1000px; /* Profundidad 3D */
+    cursor: pointer;
 }
 
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-}
-
-.card h3 {
-    color: var(--verde-sena);
-    margin-bottom: 15px;
-    font-size: 1.5rem;
-}
-
-.card p {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: #555;
-}
-
-/* Estilo de la Lista */
-.card ul {
-    list-style: none;
-    margin-top: 10px;
-}
-
-.card ul li {
-    padding: 8px 0 8px 30px;
+.card-inner {
     position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
 }
 
-.card ul li::before {
-    content: "▹";
-    position: absolute;
-    left: 0;
-    color: var(--verde-sena);
-    font-weight: bold;
-    font-size: 1.2rem;
+/* Clase que activa el giro */
+.card.is-flipped .card-inner {
+    transform: rotateY(180deg);
 }
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* CARA FRONTAL */
+.card-front {
+    background-color: var(--blanco);
+    border-top: 6px solid var(--verde-sena);
+}
+
+.card-front img {
+    width: 100%;
+    height: 75%;
+    object-fit: cover;
+}
+
+.card-front h3 {
+    padding: 15px;
+    color: var(--verde-sena);
+}
+
+/* CARA TRASERA */
+.card-back {
+    background-color: #f9f9f9;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    border-top: 6px solid var(--verde-sena);
+}
+
+.card-back p, .card-back ul {
+    text-align: left;
+    line-height: 1.6;
+    margin-top: 15px;
+}
+
+.card-back ul { list-style: "▹ "; padding-left: 20px; }
 
 /* MODO OSCURO */
-.dark-mode {
-    background-color: #1a1a1a;
-    color: #f4f4f4;
-}
-
-.dark-mode .card {
-    background-color: #2d2d2d;
+.dark-mode { background-color: #121212; color: white; }
+.dark-mode .card-front, .dark-mode .card-back {
+    background-color: #1e1e1e;
     color: white;
 }
 
-.dark-mode .card p {
-    color: #ccc;
-}
-
-/* Adaptabilidad para Móviles */
-@media (max-width: 768px) {
-    h2 { font-size: 1.8rem; }
-    .container { grid-template-columns: 1fr; }
-}
-
+/* FOOTER PEQUEÑO EN LA ESQUINA */
 footer {
-    /* Posicionamiento en la esquina inferior derecha */
     position: fixed;
     bottom: 10px;
     right: 10px;
-    
-    /* Tamaño mínimo */
-    padding: 5px 10px;
-    font-size: 0.75rem; /* Texto pequeño */
-    
-    /* Estética */
-    background-color: rgba(0, 0, 0, 0.05); /* Fondo muy sutil */
-    color: #888; /* Color suave para que no distraiga */
-    border-radius: 5px;
-    z-index: 100; /* Asegura que esté por encima de otros elementos */
-    transition: var(--transicion);
+    font-size: 0.65rem;
+    color: #999;
+    background: rgba(0,0,0,0.05);
+    padding: 4px 8px;
+    border-radius: 4px;
 }
 
-/* Ajuste opcional para que se vea mejor en Modo Oscuro */
-.dark-mode footer {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #aaa;
-}
-
-/* Efecto hover por si el usuario pasa el mouse */
-footer:hover {
-    background-color: var(--verde-sena);
-    color: white;
-    cursor: default;
-}
+.dark-mode footer { background: rgba(255,255,255,0.05); }
