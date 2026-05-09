@@ -1,0 +1,131 @@
+/* Variables de diseño */
+:root {
+    --verde-sena: #39A900;
+    --azul-oscuro: #2F2F2F;
+    --gris-fondo: #F0F2F5;
+    --blanco: #FFFFFF;
+    --transicion: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--gris-fondo);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    color: var(--azul-oscuro);
+    transition: background-color 0.3s ease;
+}
+
+/* Título Principal */
+h2 {
+    color: var(--verde-sena);
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 4px solid var(--verde-sena);
+    padding-bottom: 10px;
+}
+
+/* Botón de Modo Oscuro */
+#darkModeToggle {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: var(--verde-sena);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#darkModeToggle:hover {
+    background-color: #2d8500;
+    transform: scale(1.05);
+}
+
+/* Contenedor de las Tarjetas */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Estilo de las Tarjetas */
+.card {
+    background: var(--blanco);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 5px solid var(--verde-sena);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+    color: var(--verde-sena);
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.card p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+}
+
+/* Estilo de la Lista */
+.card ul {
+    list-style: none;
+    margin-top: 10px;
+}
+
+.card ul li {
+    padding: 8px 0 8px 30px;
+    position: relative;
+}
+
+.card ul li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: var(--verde-sena);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* MODO OSCURO */
+.dark-mode {
+    background-color: #1a1a1a;
+    color: #f4f4f4;
+}
+
+.dark-mode .card {
+    background-color: #2d2d2d;
+    color: white;
+}
+
+.dark-mode .card p {
+    color: #ccc;
+}
+
+/* Adaptabilidad para Móviles */
+@media (max-width: 768px) {
+    h2 { font-size: 1.8rem; }
+    .container { grid-template-columns: 1fr; }
+}
